@@ -16,7 +16,7 @@ and
 [[Arxiv]](https://arxiv.org/abs/2109.14549) [[Webpage]](https://mehooz.github.io/mmdr-wild/)
 
 
-![delay](figures/real_robot_test.png)
+<!-- ![delay](figures/real_robot_test.png) -->
 
 Our repository contains the necessary functions to train the policy in simulation and deploy the learned policy on the real robot in the real world. Directly testes in the real robot, we can see the A1 robot traverses in versatile real-world scenarios:
 
@@ -24,13 +24,13 @@ Our repository contains the necessary functions to train the policy in simulatio
 
 ## Simulation Environments
 
-Our repository contains the following environments in simulation:
+<!-- Our repository contains the following environments in simulation:
 
 ![environment samples](figures/env_samples.png)
 
-including uneven terrains, random-shaped obstacles, and various other environments.
+including uneven terrains, random-shaped obstacles, and various other environments. -->
 
-With the depth maps as policy input, RL agents can learn to navigate through the environments. We mainly use the following scenarios (tasks in LocoTransformer):
+With the depth maps as policy input, RL agents can learn to navigate through our simulated environments. We mainly use the following scenarios (tasks in LocoTransformer):
 
 ![environment samples](figures/teaser-long.png)
 
@@ -52,11 +52,40 @@ Please refer to our [paper](https://arxiv.org/abs/2109.14549) for more details.
 
 
 ## Setup
+
 We assume that you have access to a GPU with CUDA >=9.2 support. All dependencies can then be installed with the following commands:
 
 ```
 pip install -e .
 ```
+
+## Configuration for enviornments
+
+#### RL training
+We use config files in folder `config` to configure the parameters of training and enviornment.
+In `config/rl/`, there are three types of config files:
+- `static`: Train in basic plane ground or uneven terrain with static obstacles.
+- `moving`: Train in basic plane ground or uneven terrain with moving obstacles.
+- `challenge`: Some challenging scenarios like mountain, hill, and so on.
+
+In each folder, we have subfolders for different algorithms:
+- `naive_baseline`: Train a naive baseline policy. No frame-extraction, no delay randomization.
+- `frame_extract4`: Train a policy with frame-extraction (k=4 in the MMDR paper). No delay randomization.
+- `frame_extract4_fixed_delay`: Train a policy with frame-extraction (k=4 in the MMDR paper) and fixed delay in all episodes.
+- `frame_extract4_random_delay`: Train a policy with frame-extraction (k=4 in the MMDR paper) and random delay in each episodes.
+- `locotransformer`: Train a LocoTransformer policy.
+- `locotransformer_random_delay`: Train a LocoTransformer policy with random delay in each episodes.
+
+In challeging scenarios, we only put the `baseline` and `locotransformer` folder as config files, since we didn't conduct MMDR experiements on these scenarios.
+
+#### Visual-MPC Training
+While RL can navigate from proprioception and vision by outputing the joint angles directly, we also provide a visual-MPC training to output the control command (linear and angular velocity). See the comparison in Locotransformer paper.
+
+To reproduce, we use the following config folders:
+- `mpc`: Train a visual-MPC policy with both proprioception and vision as input.
+- `mpc_vision_only`: Train a visual-MPC policy with only vision as input.
+
+Besides, You can also configurate the network architecture in `config/`. We only use PPO for all the experiments, so we didn't put the configuration of other algorithms. But users can still use them in `torchrl` library.
 
 ## Training & Evaluation
 

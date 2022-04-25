@@ -244,6 +244,8 @@ setup(
   install_requires=[
     'numpy',
     'pybullet',
+    "torch",
+    "gym",
   ],
   ext_modules=extensions,
   classifiers=[
