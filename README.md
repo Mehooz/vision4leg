@@ -96,7 +96,9 @@ python starter/ppo_locotransformer.py \
   --config config/rl/static/locotransformer/thin-goal.json \
   --seed 0 \
   --log_dir {YOUR_LOG_DIR} \
-  --id {YOUR_ID}
+  --id {YOUR_ID} \
+  --vec_env_nums=8 \ 
+  --proc_nums=8 \
 ```
 
 to run PPO+LocoTransformer on the environment, `thin-goal`. And you can use
