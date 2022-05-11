@@ -617,7 +617,10 @@ class LocomotionGymEnv(gym.Env):
       )
       _, _, _, depth_img, _ = camera_image_set
 
-      depth = depth_img[np.newaxis, ...]
+      # LQY bug fixing
+      depth = np.array(depth_img)
+      depth = np.reshape(depth, [64, 64], order="C")[np.newaxis,...]
+
       if self.depth_image:
         # Map to real depth
         far = 1000
