@@ -519,25 +519,14 @@ if __name__ == "__main__":
   env = build_a1_ground_env(
     motor_control_mode="POSITION",
     z_constrain=True,
-    other_direction_penalty=0.1,
     clip_num=[0.1, 0.3, 0.3, 0.1, 0.3, 0.3, 0.1, 0.3, 0.3, 0.1, 0.3, 0.3],
-    res_action_scale=None,
-    enable_rendering=False,
     diagonal_act=True,
-    add_phase_obs=10,
-    add_pose_sensor=False,
     num_action_repeat=2,
     time_step_s=0.001,
     add_last_action_input=False,
-    noisy_reading=True,
-    convert_to_local_frame=False,
     enable_action_interpolation=False,
-    mass_range=None,
-    add_motor_vel_sensor=True,
     get_image=True,
-    sparse=True,
-    simple=True,
-    multiple=True
+    enable_rendering=True,
   )
   import time
   c_t = time.time()
@@ -545,11 +534,14 @@ if __name__ == "__main__":
   for i in range(100000000):
     print("reset")
     env.reset()
-    for j in range(1000):
-      _, _, done, _ = env.step(env.action_space.sample())
-      if done:
-        print("reset")
-        env.reset()
+    for j in range(10000):
+      a_1 = env.action_space.sample()[:3]
+      a_2 = np.array([0,0,0])
+      _, _, done, _ = env.step(np.concatenate([a_2, a_1]))
+
+      # if done:
+      #   print("reset")
+      #   env.reset()
   print(time.time() - c_t)
   print(env.count_t)
   print(10000 / (time.time() - c_t))

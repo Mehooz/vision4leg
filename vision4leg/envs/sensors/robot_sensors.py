@@ -381,7 +381,7 @@ class IMUSensor(sensor.BoxSpaceSensor):
       name: the name of the sensor
       dtype: data type of sensor value
     """
-    self._channels = channels if channels else ["R", "P", "YCos", "YSin"]
+    self._channels = channels if channels else ["R", "P", "Y", "dY"]
     self._num_channels = len(self._channels)
     self._noisy_reading = noisy_reading
 
