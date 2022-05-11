@@ -100,13 +100,12 @@ pf = policies.GaussianContPolicyBasicBias(
   **params['net'],
   **params['policy'])
 
-PATH = "{}/{}/{}/{}/model/model_pf_{}.pth".format(
+PATH = "{}/{}/{}/{}/model/model_pf_500.pth".format(
   args.log_dir,
   args.id,
   # params['env_name'],
   args.env_name,
-  args.seed,
-  args.snap_check
+  args.seed
 )
 if hasattr(env, "_obs_normalizer"):
 
@@ -238,68 +237,68 @@ for _ in range(1):
       # print(action.shape)
       obs, rew, done, info = env.step(action)
 
-      img = env.render(mode='rgb_array')
+      # img = env.render(mode='rgb_array')
       sim_model = env.robot.quadruped
       pyb = env.pybullet_client
       root_vel_sim, root_ang_vel_sim = pyb.getBaseVelocity(sim_model)
 
-      if not args.no_text:
-        import cv2
-        img = cv2.putText(
-          img=np.copy(img),
-          text="Speed X: {:.4f}".format(root_vel_sim[0]),
-          org=(10, 30),
-          fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-        import cv2
-        img = cv2.putText(
-          img=np.copy(img),
-          text="Speed Y: {:.4f}".format(root_vel_sim[1]),
-          org=(10, 50),
-          fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-        import cv2
-        img = cv2.putText(
-          img=np.copy(img),
-          text="Speed Z: {:.4f}".format(root_vel_sim[2]),
-          org=(10, 70),
-          fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-        rot_quat = env.robot.GetBaseOrientation()
-        import cv2
-        img = cv2.putText(
-          img=np.copy(img),
-          text="Rot Quat 1: {:.4f}".format(rot_quat[0]),
-          org=(200, 30),
-          fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-        import cv2
-        img = cv2.putText(
-          img=np.copy(img),
-          text="Rot Quat 1: {:.4f}".format(rot_quat[1]),
-          org=(200, 50),
-          fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-        import cv2
-        img = cv2.putText(
-          img=np.copy(img),
-          text="Rot Quat 2: {:.4f}".format(rot_quat[2]),
-          org=(200, 70),
-          fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-        import cv2
-        img = cv2.putText(
-          img=np.copy(img),
-          text="Rot Quat 3: {:.4f}".format(rot_quat[3]),
-          org=(200, 90),
-          fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      # if not args.no_text:
+      #   import cv2
+      #   img = cv2.putText(
+      #     img=np.copy(img),
+      #     text="Speed X: {:.4f}".format(root_vel_sim[0]),
+      #     org=(10, 30),
+      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      #   import cv2
+      #   img = cv2.putText(
+      #     img=np.copy(img),
+      #     text="Speed Y: {:.4f}".format(root_vel_sim[1]),
+      #     org=(10, 50),
+      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      #   import cv2
+      #   img = cv2.putText(
+      #     img=np.copy(img),
+      #     text="Speed Z: {:.4f}".format(root_vel_sim[2]),
+      #     org=(10, 70),
+      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      #   rot_quat = env.robot.GetBaseOrientation()
+      #   import cv2
+      #   img = cv2.putText(
+      #     img=np.copy(img),
+      #     text="Rot Quat 1: {:.4f}".format(rot_quat[0]),
+      #     org=(200, 30),
+      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      #   import cv2
+      #   img = cv2.putText(
+      #     img=np.copy(img),
+      #     text="Rot Quat 1: {:.4f}".format(rot_quat[1]),
+      #     org=(200, 50),
+      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      #   import cv2
+      #   img = cv2.putText(
+      #     img=np.copy(img),
+      #     text="Rot Quat 2: {:.4f}".format(rot_quat[2]),
+      #     org=(200, 70),
+      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      #   import cv2
+      #   img = cv2.putText(
+      #     img=np.copy(img),
+      #     text="Rot Quat 3: {:.4f}".format(rot_quat[3]),
+      #     org=(200, 90),
+      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
 
         # print(img.shape)
         # import matplotlib.pyplot as plt
         # plt.imshow(img)
         # plt.pause(0.01)
       # out.write(img)
-      writer.write(img, rgb_mode=True)
+      # writer.write(img, rgb_mode=True)
       # print(info["success"])
       # success = max(success, info["success"])
       # env.render()
@@ -315,7 +314,7 @@ for _ in range(1):
         # total_success += success
         # count += 1
         # print("EPoch:", idx, task_name, success, total_success / count)
-        break
+        env.reset()
         # if not info["success"]:
         #     print("CAo")
         #     exit()
