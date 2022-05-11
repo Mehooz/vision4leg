@@ -27,7 +27,7 @@ def experiment(args):
 
   device = torch.device(
     "cuda:{}".format(args.device) if args.cuda else "cpu")
-
+  params["env"]["env_build"]["enable_rendering"] = True
   env = get_subprocvec_env(
     params["env_name"],
     params["env"],
