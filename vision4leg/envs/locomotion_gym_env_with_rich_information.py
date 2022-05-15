@@ -1,4 +1,5 @@
 # coding=utf-8
+
 # Copyright 2020 The Google Research Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +20,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from vision4leg.envs.sensors import space_utils
 from vision4leg.envs.sensors import sensor
 from vision4leg.robots import robot_config
+import pybullet as pyb
 import cv2
 import vision4leg.envs.pybullet_client as bullet_client
 import pybullet  # pytype: disable=import-error
@@ -375,6 +377,8 @@ class LocomotionGymEnv(gym.Env):
     self._robot.Reset(reload_urdf=False,
                       default_motor_angles=initial_motor_angles,
                       reset_time=reset_duration)
+    angle=np.random.rand()*2*np.pi
+    self.init_ori = pyb.getQuaternionFromEuler([0., 0., angle])
     if self.init_ori is not None:
       self._pybullet_client.resetBasePositionAndOrientation(
         self._robot.quadruped, self.init_pos, self.init_ori)

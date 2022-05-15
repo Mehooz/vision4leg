@@ -42,10 +42,10 @@
             ],
             "target_vel": 1.0,
             "random_init_range": 1.0,
-            "domain_randomization": true,
+            "domain_randomization": false,
             "enable_action_interpolation": false,
             "enable_action_filter": false,
-            "terrain_type": "random_blocks_sparse_and_heightfield",
+            "terrain_type": "random_heightfield",
             "frame_extract": 1,
             "get_image_interval": 1
         }

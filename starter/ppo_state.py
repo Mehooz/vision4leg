@@ -21,7 +21,7 @@ import torch
 
 args = get_args()
 params = get_params(args.config)
-params["env"]["env_build"]["enable_rendering"] = False
+params["env"]["env_build"]["enable_rendering"] = True
 
 
 def experiment(args):
