@@ -525,6 +525,7 @@ if __name__ == "__main__":
     time_step_s=0.001,
     add_last_action_input=False,
     enable_action_interpolation=False,
+    terrain_type="mount",
     get_image=True,
     enable_rendering=True,
   )

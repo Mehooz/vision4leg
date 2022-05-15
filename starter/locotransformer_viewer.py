@@ -28,7 +28,7 @@ def get_args():
                       help='random seed (default: 1)')
   parser.add_argument('--env_seed', type=int, default=0,
                       help='random seed (default: 1)')
-  parser.add_argument('--env_name', type=str, default='A1MoveForwardBurden')
+  parser.add_argument('--env_name', type=str, default='A1MoveGround')
   parser.add_argument('--num_episodes', type=int, default=1,
                       help='number of episodes')
   parser.add_argument("--config", type=str,   default=None,
@@ -68,7 +68,7 @@ args = get_args()
 np.random.seed(0)
 random.seed(0)
 
-PARAM_PATH = "{}/{}/{}/{}/params.json".format(
+PARAM_PATH = "{}\\{}\\{}\\{}\\params.json".format(
   args.log_dir,
   args.id,
   args.env_name,
@@ -287,90 +287,90 @@ for _ in range(1):
       # time.sleep(0.3)
 
       obs, rew, done, info = env.step(action)
-      img = env.render(mode='rgb_array')
-
-      sim_model = env.robot.quadruped
-      pyb = env.pybullet_client
-      root_vel_sim, root_ang_vel_sim = pyb.getBaseVelocity(sim_model)
-
-      # import cv2
-      # img = cv2.putText(
-      #     img=np.copy(img),
-      #     text="Speed X: {:.4f}".format(root_vel_sim[0]),
-      #     org=(10, 30),
-      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-      # import cv2
-      # img = cv2.putText(
-      #     img=np.copy(img),
-      #     text="Speed Y: {:.4f}".format(root_vel_sim[1]),
-      #     org=(10, 50),
-      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-      # import cv2
-      # img = cv2.putText(
-      #     img=np.copy(img),
-      #     text="Speed Z: {:.4f}".format(root_vel_sim[2]),
-      #     org=(10, 70),
-      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-      # rot_quat = env.robot.GetBaseOrientation()
-      # import cv2
-      # img = cv2.putText(
-      #     img=np.copy(img),
-      #     text="Rot Quat 1: {:.4f}".format(rot_quat[0]),
-      #     org=(200, 30),
-      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-      # import cv2
-      # img = cv2.putText(
-      #     img=np.copy(img),
-      #     text="Rot Quat 1: {:.4f}".format(rot_quat[1]),
-      #     org=(200, 50),
-      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-      # import cv2
-      # img = cv2.putText(
-      #     img=np.copy(img),
-      #     text="Rot Quat 2: {:.4f}".format(rot_quat[2]),
-      #     org=(200, 70),
-      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-
-      # import cv2
-      # img = cv2.putText(
-      #     img=np.copy(img),
-      #     text="Rot Quat 3: {:.4f}".format(rot_quat[3]),
-      #     org=(200, 90),
-      #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-      # plt.text(
-      #     x=10,
-      #     y=10,
-      #     s="Speed: {}".format(root_vel_sim)
-      # )
-      # print(img.shape)
-      # import matplotlib.pyplot as plt
-      # plt.imshow(img)
-      # plt.pause(0.01)
-      # out.write(img)
-      # print(img.shape)
-      w, h, _ = img.shape
-      frame_1 = (frame_1 - np.min(frame_1)) / \
-        (np.max(frame_1) - np.min(frame_1))
-      frame_resize = cv2.resize(frame_1, (w, w))
-      frame_resize = (frame_resize * 255).astype(img.dtype)
-      frame_resize = frame_resize.reshape((w, w, 1))
-      frame_resize = np.repeat(frame_resize, 3, axis=2)
-      # print(frame_resize)
-      # import matplotlib.pyplot as plt
-      # # plt.imshow(frame_resize)
+      # img = env.render(mode='rgb_array')
+      #
+      # sim_model = env.robot.quadruped
+      # pyb = env.pybullet_client
+      # root_vel_sim, root_ang_vel_sim = pyb.getBaseVelocity(sim_model)
+      #
+      # # import cv2
+      # # img = cv2.putText(
+      # #     img=np.copy(img),
+      # #     text="Speed X: {:.4f}".format(root_vel_sim[0]),
+      # #     org=(10, 30),
+      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      # # import cv2
+      # # img = cv2.putText(
+      # #     img=np.copy(img),
+      # #     text="Speed Y: {:.4f}".format(root_vel_sim[1]),
+      # #     org=(10, 50),
+      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      # # import cv2
+      # # img = cv2.putText(
+      # #     img=np.copy(img),
+      # #     text="Speed Z: {:.4f}".format(root_vel_sim[2]),
+      # #     org=(10, 70),
+      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      # # rot_quat = env.robot.GetBaseOrientation()
+      # # import cv2
+      # # img = cv2.putText(
+      # #     img=np.copy(img),
+      # #     text="Rot Quat 1: {:.4f}".format(rot_quat[0]),
+      # #     org=(200, 30),
+      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      # # import cv2
+      # # img = cv2.putText(
+      # #     img=np.copy(img),
+      # #     text="Rot Quat 1: {:.4f}".format(rot_quat[1]),
+      # #     org=(200, 50),
+      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      # # import cv2
+      # # img = cv2.putText(
+      # #     img=np.copy(img),
+      # #     text="Rot Quat 2: {:.4f}".format(rot_quat[2]),
+      # #     org=(200, 70),
+      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      #
+      # # import cv2
+      # # img = cv2.putText(
+      # #     img=np.copy(img),
+      # #     text="Rot Quat 3: {:.4f}".format(rot_quat[3]),
+      # #     org=(200, 90),
+      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+      # # plt.text(
+      # #     x=10,
+      # #     y=10,
+      # #     s="Speed: {}".format(root_vel_sim)
+      # # )
+      # # print(img.shape)
+      # # import matplotlib.pyplot as plt
       # # plt.imshow(img)
-      # plt.imshow(np.concatenate([img, frame_resize], axis=1))
-      # plt.pause(0.01)
-
-      # print(np.vstack([img, frame_resize]).shape)
-      # writer.write(frame_resize, rgb_mode=True)
-      writer.write(np.concatenate(
-        [img, frame_resize], axis=1), rgb_mode=True)
+      # # plt.pause(0.01)
+      # # out.write(img)
+      # # print(img.shape)
+      # w, h, _ = img.shape
+      # frame_1 = (frame_1 - np.min(frame_1)) / \
+      #   (np.max(frame_1) - np.min(frame_1))
+      # frame_resize = cv2.resize(frame_1, (w, w))
+      # frame_resize = (frame_resize * 255).astype(img.dtype)
+      # frame_resize = frame_resize.reshape((w, w, 1))
+      # frame_resize = np.repeat(frame_resize, 3, axis=2)
+      # # print(frame_resize)
+      # # import matplotlib.pyplot as plt
+      # # # plt.imshow(frame_resize)
+      # # # plt.imshow(img)
+      # # plt.imshow(np.concatenate([img, frame_resize], axis=1))
+      # # plt.pause(0.01)
+      #
+      # # print(np.vstack([img, frame_resize]).shape)
+      # # writer.write(frame_resize, rgb_mode=True)
+      # writer.write(np.concatenate(
+      #   [img, frame_resize], axis=1), rgb_mode=True)
       # print(info["success"])
       # success = max(success, info["success"])
       # env.render()

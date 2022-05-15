@@ -54,7 +54,7 @@
         "size": 16384,
         "time_limit_filter": true
     },
-    "policy": {},
+    "policy": {"tanh_action": true},
     "encoder": {
         "hidden_shapes": [
             256,

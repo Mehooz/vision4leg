@@ -238,7 +238,7 @@ class GaussianContPolicy(networks.Net, GaussianContPolicyBase):
 
 class GaussianContPolicyBasicBias(networks.Net, GaussianContPolicyBase):
   def __init__(self, output_shape, tanh_action=False, log_init=0.125, **kwargs):
-    super().__init__(output_shape=output_shape, **kwargs)
+    super().__init__(output_shape=output_shape, activation_func=nn.Tanh if tanh_action else nn.ReLU,**kwargs)
     self.continuous = True
     self.logstd = nn.Parameter(torch.ones(output_shape) * np.log(log_init))
     self.tanh_action = tanh_action

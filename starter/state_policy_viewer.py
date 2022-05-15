@@ -69,7 +69,7 @@ args = get_args()
 if args.config is not None:
   PARAM_PATH = args.config
 else:
-  PARAM_PATH = "{}/{}/{}/{}/params.json".format(
+  PARAM_PATH = "{}\\{}\\{}\\{}\\params.json".format(
     args.log_dir,
     args.id,
     args.env_name,
@@ -100,7 +100,7 @@ pf = policies.GaussianContPolicyBasicBias(
   **params['net'],
   **params['policy'])
 
-PATH = "{}/{}/{}/{}/model/model_pf_500.pth".format(
+PATH = "{}\\{}\\{}\\{}\\model\\model_pf_best.pth".format(
   args.log_dir,
   args.id,
   # params['env_name'],
