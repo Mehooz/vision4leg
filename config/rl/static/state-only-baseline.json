@@ -81,7 +81,7 @@
         "num_epochs": 1500,
         "batch_size": 1024,
         "gae": true,
-        "save_interval": 100,
+        "save_interval": 50,
         "eval_interval": 10
     },
     "ppo": {
