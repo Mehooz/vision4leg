@@ -26,7 +26,7 @@
             "time_step_s": 0.0025,
             "num_action_repeat": 16,
             "add_last_action_input": true,
-            "no_displacement": true,
+            "no_displacement": false,
             "diagonal_act": true,
             "get_image": false,
             "depth_image": false,

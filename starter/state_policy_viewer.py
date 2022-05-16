@@ -175,13 +175,13 @@ for _ in range(1):
   # log_id = p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, "racecar.mp4")
   # env = wrappers.Monitor(env_single, "view_log", video_callable=None, force=True)
 
-  from vidgear.gears import WriteGear
-  output_params = {"-crf": 0, "-preset": "fast"}
-  writer = WriteGear(
-    output_filename=os.path.join(
-      video_output_path, 'Output{}.mp4'.format(args.add_tag)),
-    logging=True, **output_params
-  )
+  # from vidgear.gears import WriteGear
+  # output_params = {"-crf": 0, "-preset": "fast"}
+  # writer = WriteGear(
+  #   output_filename=os.path.join(
+  #     video_output_path, 'Output{}.mp4'.format(args.add_tag)),
+  #   logging=True, **output_params
+  # )
   # out = cv2.VideoWriter('project.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 20.00, (360, 480))
   # obs = env_single.reset()
   reward = 0

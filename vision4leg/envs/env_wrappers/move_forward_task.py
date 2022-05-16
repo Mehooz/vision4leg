@@ -37,7 +37,7 @@ class MoveForwardTask(object):
       move_forward_coeff=1,
       other_direction_penalty=0,
       z_penalty=0,
-      orientation_penalty=0,
+      orientation_penalty=1,
       time_step_s=0.01,
       num_action_repeat=10,
       height_fall_coeff=0.3,
@@ -149,7 +149,7 @@ class MoveForwardTask(object):
 
     move_forward_reward = self._calc_reward_root_velocity()
     alive_reward = self._alive_reward
-    orientation_reward = -self._calc_reward_rotation()
+    orientation_reward = self._calc_reward_rotation()
 
     reward = move_forward_reward * self.move_forward_coeff + \
       energy_reward * self.energy_weight - \
