@@ -76,6 +76,7 @@ class LocomotionGymEnv(gym.Env):
                blinding_spot=True,
                interpolation=False,
                fixed_delay_observation=False,
+               random_spawn_heading=False
                ):
     """Initializes the locomotion gym environment.
 
@@ -95,6 +96,7 @@ class LocomotionGymEnv(gym.Env):
       ValueError: If the num_action_repeat is less than 1.
 
     """
+    self.random_spawn_heading= random_spawn_heading
     self.count_t = 0
     self.seed()
     self._gym_config = gym_config
@@ -379,7 +381,7 @@ class LocomotionGymEnv(gym.Env):
                       reset_time=reset_duration)
     angle=np.random.rand()*2*np.pi
     self.init_ori = pyb.getQuaternionFromEuler([0., 0., angle])
-    if self.init_ori is not None:
+    if self.init_ori is not None and self.random_spawn_heading:
       self._pybullet_client.resetBasePositionAndOrientation(
         self._robot.quadruped, self.init_pos, self.init_ori)
     self._pybullet_client.setPhysicsEngineParameter(enableConeFriction=0)

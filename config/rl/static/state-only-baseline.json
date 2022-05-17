@@ -47,7 +47,8 @@
             "enable_action_filter": false,
             "terrain_type": "random_heightfield",
             "frame_extract": 1,
-            "get_image_interval": 1
+            "get_image_interval": 1,
+            "random_spawn_heading": true
         }
     },
     "replay_buffer": {

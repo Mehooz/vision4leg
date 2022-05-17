@@ -200,6 +200,7 @@ def build_a1_ground_env(
     curriculum=False,
     interpolation=False,
     fixed_delay_observation=False,
+    random_spawn_heading=False
 ):
 
   sim_params = locomotion_gym_config.SimulationParameters()
@@ -331,7 +332,8 @@ def build_a1_ground_env(
     reset_frame_idx=reset_frame_idx,
     reset_frame_idx_each_step=reset_frame_idx_each_step,
     interpolation=interpolation,
-    fixed_delay_observation=fixed_delay_observation
+    fixed_delay_observation=fixed_delay_observation,
+    random_spawn_heading=random_spawn_heading
   )
 
   env = observation_dictionary_to_array_wrapper.ObservationDictionaryToArrayWrapper(
