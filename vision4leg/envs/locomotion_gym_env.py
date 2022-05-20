@@ -122,7 +122,7 @@ class LocomotionGymEnv(gym.Env):
       if self._record_video:
         self._pybullet_client = pybullet
         self._pybullet_client .connect(
-          self._pybullet_client.GUI, options="--width=1280 --height=720 --mp4=\"test.mp4\" --mp4fps=100")
+          self._pybullet_client.GUI, options="--width=1920 --height=1080 --mp4=\"test.mp4\" --mp4fps=100")
         self._pybullet_client.configureDebugVisualizer(
           self._pybullet_client.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
       else:

@@ -68,7 +68,7 @@ args = get_args()
 np.random.seed(0)
 random.seed(0)
 
-PARAM_PATH = "{}\\{}\\{}\\{}\\params.json".format(
+PARAM_PATH = "{}\{}\{}\{}\params.json".format(
   args.log_dir,
   args.id,
   args.env_name,
@@ -194,8 +194,15 @@ video_output_path = "{}/{}/{}/{}".format(
 
 Path(video_output_path).mkdir(parents=True, exist_ok=True)
 
+total_reward = []
+total_moving_distance = []
+
+epi_reward = 0
+epi_moving = 0
+
 # for idx in range(1):
-for _ in range(1):
+for _ in range(5):
+
   # last_weights = []
   # general_weights = []
   # cat_weights = []
@@ -218,203 +225,216 @@ for _ in range(1):
 
   from vidgear.gears import WriteGear
   output_params = {"-vcodec": "libx264", "-crf": 0, "-preset": "fast"}
-  writer = WriteGear(
-    output_filename=os.path.join(
-      video_output_path, 'Output_{}{}.mp4'.format(args.snap_check, args.add_tag)),
-    logging=True, **output_params
-  )
+  # writer = WriteGear(
+  #   output_filename=os.path.join(
+  #     video_output_path, 'Output_{}{}.mp4'.format(args.snap_check, args.add_tag)),
+  #   logging=True, **output_params
+  # )
   # out = cv2.VideoWriter('project.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 20.00, (360, 480))
   # obs = env_single.reset()
   reward = 0
   # x_sped = 0
   # y_sped = 0
   step = 0
-  for i in range(num_episodes):
-    # env = get_env(
-    #     "LaikagoMoveForward",
-    #     "default",
-    #     {
-    #         "reward_scale": 1,
-    #         "obs_norm": False,
-    #         "env_build": {
-    #             "enable_rendering_gui": True
-    #         }
-    #     }
-    # )
-    obs = env.reset()
-    # env.pybullet_client.configureDebugVisualizer(
-    #   env.pybullet_client.COV_ENABLE_RENDERING, 1)
-    # success = 0
-    while True:
-      # env_single.render()
-      frame_1 = obs[-64 * 64:]
-      frame_1 = frame_1.reshape((64, 64))
 
-      # import matplotlib.pyplot as plt
-      # plt.imshow(frame_1, cmap='gray')
-      # plt.pause(0.01)
-      ob_t = torch.Tensor(obs).unsqueeze(0)
-      # print(ob_t)
-      # ob_t[0, -4:] =
-      # ob_t[0, -4:] = 1
-      # ob_t[0, -3] = 0
-      # ob_t[0, -1] = 0
-      # embedding_input = np.zeros(env_info.num_tasks)
-      # embedding_input = torch.zeros(env_to_wrap.num_tasks)
-      # embedding_input[idx] = 1
-      # embedding_input = torch.cat([torch.Tensor(env_single.goal.copy()), embedding_input])
-      # embedding_input = embedding_input.unsqueeze(0)
-      # print(ob_t)
-      # action, general_weight, last_weight = pf.eval_act(ob_t, embedding_input, return_weights = True )
-      action = pf.eval_act(ob_t)
-      # action = pf.explore(ob_t)
-      # action = action["action"].squeeze(0).cpu().numpy()
-      # print(action.shape)
-      # print(action)
-      count += 1
-      # action = np.array([0,0,0,0,0,0])
-      # action = -action
-      # action = np.array([1,1,1,1,1,1])
-      # print(action)
-      #  = weights
-      # last_weight = F.softmax(last_weight, dim=-1)
-      # # last_weight = last_weight.exp()
-      # general_weight = F.softmax(general_weight, dim = -1)
-      # print(general_weight[0].shape)
+  # env = get_env(
+  #     "LaikagoMoveForward",
+  #     "default",
+  #     {
+  #         "reward_scale": 1,
+  #         "obs_norm": False,
+  #         "env_build": {
+  #             "enable_rendering_gui": True
+  #         }
+  #     }
+  # )
+  env.seed(0)
+  random.seed(0)
+  np.random.seed(0)
+  obs = env.reset()
+  # env.pybullet_client.configureDebugVisualizer(
+  #   env.pybullet_client.COV_ENABLE_RENDERING, 1)
+  # success = 0
+  while True:
+    # env_single.render()
+    frame_1 = obs[-64 * 64:]
+    frame_1 = frame_1.reshape((64, 64))
 
-      morpho_action_weights.append(action)
-      import time
-      # time.sleep(0.3)
+    # import matplotlib.pyplot as plt
+    # plt.imshow(frame_1, cmap='gray')
+    # plt.pause(0.01)
+    ob_t = torch.Tensor(obs).unsqueeze(0)
+    # print(ob_t)
+    # ob_t[0, -4:] =
+    # ob_t[0, -4:] = 1
+    # ob_t[0, -3] = 0
+    # ob_t[0, -1] = 0
+    # embedding_input = np.zeros(env_info.num_tasks)
+    # embedding_input = torch.zeros(env_to_wrap.num_tasks)
+    # embedding_input[idx] = 1
+    # embedding_input = torch.cat([torch.Tensor(env_single.goal.copy()), embedding_input])
+    # embedding_input = embedding_input.unsqueeze(0)
+    # print(ob_t)
+    # action, general_weight, last_weight = pf.eval_act(ob_t, embedding_input, return_weights = True )
+    action = pf.eval_act(ob_t)
+    # action = pf.explore(ob_t)
+    # action = action["action"].squeeze(0).cpu().numpy()
+    # print(action.shape)
+    # print(action)
+    count += 1
+    # action = np.array([0,0,0,0,0,0])
+    # action = -action
+    # action = np.array([1,1,1,1,1,1])
+    # print(action)
+    #  = weights
+    # last_weight = F.softmax(last_weight, dim=-1)
+    # # last_weight = last_weight.exp()
+    # general_weight = F.softmax(general_weight, dim = -1)
+    # print(general_weight[0].shape)
 
-      obs, rew, done, info = env.step(action)
-      # img = env.render(mode='rgb_array')
-      #
-      # sim_model = env.robot.quadruped
-      # pyb = env.pybullet_client
-      # root_vel_sim, root_ang_vel_sim = pyb.getBaseVelocity(sim_model)
-      #
-      # # import cv2
-      # # img = cv2.putText(
-      # #     img=np.copy(img),
-      # #     text="Speed X: {:.4f}".format(root_vel_sim[0]),
-      # #     org=(10, 30),
-      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-      #
-      # # import cv2
-      # # img = cv2.putText(
-      # #     img=np.copy(img),
-      # #     text="Speed Y: {:.4f}".format(root_vel_sim[1]),
-      # #     org=(10, 50),
-      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-      #
-      # # import cv2
-      # # img = cv2.putText(
-      # #     img=np.copy(img),
-      # #     text="Speed Z: {:.4f}".format(root_vel_sim[2]),
-      # #     org=(10, 70),
-      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-      #
-      # # rot_quat = env.robot.GetBaseOrientation()
-      # # import cv2
-      # # img = cv2.putText(
-      # #     img=np.copy(img),
-      # #     text="Rot Quat 1: {:.4f}".format(rot_quat[0]),
-      # #     org=(200, 30),
-      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-      #
-      # # import cv2
-      # # img = cv2.putText(
-      # #     img=np.copy(img),
-      # #     text="Rot Quat 1: {:.4f}".format(rot_quat[1]),
-      # #     org=(200, 50),
-      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-      #
-      # # import cv2
-      # # img = cv2.putText(
-      # #     img=np.copy(img),
-      # #     text="Rot Quat 2: {:.4f}".format(rot_quat[2]),
-      # #     org=(200, 70),
-      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-      #
-      # # import cv2
-      # # img = cv2.putText(
-      # #     img=np.copy(img),
-      # #     text="Rot Quat 3: {:.4f}".format(rot_quat[3]),
-      # #     org=(200, 90),
-      # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
-      # # plt.text(
-      # #     x=10,
-      # #     y=10,
-      # #     s="Speed: {}".format(root_vel_sim)
-      # # )
-      # # print(img.shape)
-      # # import matplotlib.pyplot as plt
-      # # plt.imshow(img)
-      # # plt.pause(0.01)
-      # # out.write(img)
-      # # print(img.shape)
-      # w, h, _ = img.shape
-      # frame_1 = (frame_1 - np.min(frame_1)) / \
-      #   (np.max(frame_1) - np.min(frame_1))
-      # frame_resize = cv2.resize(frame_1, (w, w))
-      # frame_resize = (frame_resize * 255).astype(img.dtype)
-      # frame_resize = frame_resize.reshape((w, w, 1))
-      # frame_resize = np.repeat(frame_resize, 3, axis=2)
-      # # print(frame_resize)
-      # # import matplotlib.pyplot as plt
-      # # # plt.imshow(frame_resize)
-      # # # plt.imshow(img)
-      # # plt.imshow(np.concatenate([img, frame_resize], axis=1))
-      # # plt.pause(0.01)
-      #
-      # # print(np.vstack([img, frame_resize]).shape)
-      # # writer.write(frame_resize, rgb_mode=True)
-      # writer.write(np.concatenate(
-      #   [img, frame_resize], axis=1), rgb_mode=True)
-      # print(info["success"])
-      # success = max(success, info["success"])
-      # env.render()
-      # if info["success"] and not done:
-      # print("FXXk")
-      # exit()
-      reward += rew
-      step += 1
-      # x_sped += info["x_velocity"]
-      # y_sped += info["y_velocity"]
-      if done:
+    morpho_action_weights.append(action)
+    import time
+    # time.sleep(0.3)
 
-        # total_success += success
-        # count += 1
-        # print("EPoch:", idx, task_name, success, total_success / count)
-        break
-        # if not info["success"]:
-        #     print("CAo")
-        #     exit()
-        # obs = env.reset()
-        # idx += 1
-    #         obs = env_single.reset()
-    #         success = 0
-    #         t = []
-    #         t_now = 0
-    # # m = [sin(t_now)]
-    #         m = []
-      # if len(info["rewards"]) > num_episodes:
-      #     if len(info["rewards"]) == 1 and video_recorder.enabled:
-      #         # save video of first episode
-      #         print("Saved video.")
-      #     print(info["rewards"][-1])
-      #     num_episodes = le
-    print("finish eposide")
+    obs, rew, done, info = env.step(action)
+    epi_reward += rew
+    pos = env.env.env.env.env.env.env._gym_env._robot.GetBasePosition()
+    epi_moving = pos[0]
+    # img = env.render(mode='rgb_array')
+    #
+    # sim_model = env.robot.quadruped
+    # pyb = env.pybullet_client
+    # root_vel_sim, root_ang_vel_sim = pyb.getBaseVelocity(sim_model)
+    #
+    # # import cv2
+    # # img = cv2.putText(
+    # #     img=np.copy(img),
+    # #     text="Speed X: {:.4f}".format(root_vel_sim[0]),
+    # #     org=(10, 30),
+    # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+    #
+    # # import cv2
+    # # img = cv2.putText(
+    # #     img=np.copy(img),
+    # #     text="Speed Y: {:.4f}".format(root_vel_sim[1]),
+    # #     org=(10, 50),
+    # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+    #
+    # # import cv2
+    # # img = cv2.putText(
+    # #     img=np.copy(img),
+    # #     text="Speed Z: {:.4f}".format(root_vel_sim[2]),
+    # #     org=(10, 70),
+    # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+    #
+    # # rot_quat = env.robot.GetBaseOrientation()
+    # # import cv2
+    # # img = cv2.putText(
+    # #     img=np.copy(img),
+    # #     text="Rot Quat 1: {:.4f}".format(rot_quat[0]),
+    # #     org=(200, 30),
+    # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+    #
+    # # import cv2
+    # # img = cv2.putText(
+    # #     img=np.copy(img),
+    # #     text="Rot Quat 1: {:.4f}".format(rot_quat[1]),
+    # #     org=(200, 50),
+    # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+    #
+    # # import cv2
+    # # img = cv2.putText(
+    # #     img=np.copy(img),
+    # #     text="Rot Quat 2: {:.4f}".format(rot_quat[2]),
+    # #     org=(200, 70),
+    # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+    #
+    # # import cv2
+    # # img = cv2.putText(
+    # #     img=np.copy(img),
+    # #     text="Rot Quat 3: {:.4f}".format(rot_quat[3]),
+    # #     org=(200, 90),
+    # #     fontFace=1, fontScale=1, color=(0, 0, 255), thickness=1)
+    # # plt.text(
+    # #     x=10,
+    # #     y=10,
+    # #     s="Speed: {}".format(root_vel_sim)
+    # # )
+    # # print(img.shape)
+    # # import matplotlib.pyplot as plt
+    # # plt.imshow(img)
+    # # plt.pause(0.01)
+    # # out.write(img)
+    # # print(img.shape)
+    # w, h, _ = img.shape
+    # frame_1 = (frame_1 - np.min(frame_1)) / \
+    #   (np.max(frame_1) - np.min(frame_1))
+    # frame_resize = cv2.resize(frame_1, (w, w))
+    # frame_resize = (frame_resize * 255).astype(img.dtype)
+    # frame_resize = frame_resize.reshape((w, w, 1))
+    # frame_resize = np.repeat(frame_resize, 3, axis=2)
+    # # print(frame_resize)
+    # # import matplotlib.pyplot as plt
+    # # # plt.imshow(frame_resize)
+    # # # plt.imshow(img)
+    # # plt.imshow(np.concatenate([img, frame_resize], axis=1))
+    # # plt.pause(0.01)
+    #
+    # # print(np.vstack([img, frame_resize]).shape)
+    # writer.write(frame_resize, rgb_mode=True)
+    # writer.write(np.concatenate(
+    #   [img, frame_resize], axis=1), rgb_mode=True)
+    # print(info["success"])
+    # success = max(success, info["success"])
+    # env.render()
+    # if info["success"] and not done:
+    # print("FXXk")
+    # exit()
+    reward += rew
+    step += 1
+    # x_sped += info["x_velocity"]
+    # y_sped += info["y_velocity"]
+    if done:
+      total_reward.append(epi_reward)
+      total_moving_distance.append(epi_moving)
+
+      with open("{}.pkl".format("eval_result"), "wb+") as file:
+        pickle.dump(
+          dict(reward=total_reward,
+               move_distance=total_moving_distance
+               ), file)
+      # total_success += success
+      # count += 1
+      # print("EPoch:", idx, task_name, success, total_success / count)
+      break
+      # if not info["success"]:
+      #     print("CAo")
+      #     exit()
+      # obs = env.reset()
+      # idx += 1
+  #         obs = env_single.reset()
+  #         success = 0
+  #         t = []
+  #         t_now = 0
+  # # m = [sin(t_now)]
+  #         m = []
+    # if len(info["rewards"]) > num_episodes:
+    #     if len(info["rewards"]) == 1 and video_recorder.enabled:
+    #         # save video of first episode
+    #         print("Saved video.")
+    #     print(info["rewards"][-1])
+    #     num_episodes = le
+  print("finish eposide")
   fps = count / (time.time() - t)
   print("Reward:", reward / num_episodes, "FPS:", fps)
   print("Step Counts:", step)
 
   # out.release()
-  writer.close()
+  # writer.close()
   # print("X Speed:", REWARD_COEFF[idx], x_sped / num_episodes)
   # print("Y Speed:", REWARD_COEFF[idx], y_sped / num_episodes)
   rewards.append(reward)
   # env.pybullet_client.stopStateLogging(log_id)
   # p.stopStateLogging(log_id)
 
-  exit()
+  # exit()

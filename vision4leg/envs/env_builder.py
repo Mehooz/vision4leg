@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import pybullet
 import gym
 import numpy as np
 import vision4leg.envs.utilities.a1_randomizer_ground as a1_rg
@@ -531,6 +532,11 @@ if __name__ == "__main__":
     get_image=True,
     enable_rendering=True,
   )
+  pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_WIREFRAME, 0)
+  pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_RGB_BUFFER_PREVIEW, 0)
+  pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_DEPTH_BUFFER_PREVIEW, 0)
+  pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_SEGMENTATION_MARK_PREVIEW, 0)
+  pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_GUI, 0)
   import time
   c_t = time.time()
   env.reset()

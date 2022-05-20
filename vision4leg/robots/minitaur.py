@@ -267,6 +267,9 @@ class Minitaur(object):
      dist] = self._pybullet_client.getDebugVisualizerCamera()[8:11]
     self._pybullet_client.resetDebugVisualizerCamera(dist, yaw, pitch,
                                                      base_pos)
+
+    # self._pybullet_client.resetDebugVisualizerCamera(3.5, 0, -89.9,
+    #                                                  [6,2,0])
     self._pybullet_client.configureDebugVisualizer(
       self._pybullet_client.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
 
