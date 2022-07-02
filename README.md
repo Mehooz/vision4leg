@@ -172,16 +172,11 @@ for LocoTransformer:
 for MMDR:
 ```
 
-@inproceedings{Imai2021VisionGuidedQL,
-    title={Vision-Guided Quadrupedal Locomotion in the Wild with Multi-Modal Delay Randomization},
-    author={Chieko Imai and Minghao Zhang and Yuchen Zhang and Marcin Kierebinski and Ruihan Yang and Yuzhe Qin and Xiaolong Wang},
-    eprint={2109.14549},
-    year={2021},
-    archivePrefix={arXiv},
-    primaryClass={cs.RO},
-    booktitle={arXiv preprint},
-    volume={2109.14549},
-}
+@inproceedings{Imai2021VisionGuidedQL, 
+   title={Vision-Guided Quadrupedal Locomotion in the Wild with Multi-Modal Delay Randomization}, 
+   author={Chieko Imai and Minghao Zhang and Yuchen Zhang and Marcin Kierebinski and Ruihan Yang and Yuzhe Qin and Xiaolong Wang}, 
+   booktitle={2022 IEEE/RSJ international conference on intelligent robots and systems (IROS)}, 
+ } 
 ```
 
 ## Acknowledgements
